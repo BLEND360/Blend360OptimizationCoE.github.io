@@ -61,7 +61,7 @@ header:
   image: "/assets/images/header-v1.2.png"
 
 author:
-  name   : "First Lastname"
+  name   : "Amir Lastname"
   avatar : "/assets/images/bio-photo.jpg"
   bio    : "My awesome biography constrained to a sentence or two goes here."
   links:
