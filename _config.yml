@@ -58,7 +58,7 @@ plugins:
   - jekyll-include-cache
 
 header:
-  image: /asset/images/header v1.2.png
+  image: /assets/images/header v1.2.png
 
 author:
   name   : "First Lastname"
