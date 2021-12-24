@@ -57,6 +57,9 @@ plugins:
   - jemoji
   - jekyll-include-cache
 
+header:
+  image: /asset/images/header v1.2.png
+
 author:
   name   : "First Lastname"
   avatar : "/assets/images/bio-photo.jpg"
