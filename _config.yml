@@ -13,7 +13,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: MM
+title: BLEND 360 Optimization Center of Excellence
 email:
 description: >- # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
@@ -21,7 +21,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Google search results) and in your feed.xml site description.
 twitter_username: username
 github_username: username
-minimal_mistakes_skin: default
+minimal_mistakes_skin: dark
 search: true
 
 # Build settings
@@ -58,40 +58,45 @@ plugins:
   - jemoji
   - jekyll-include-cache
 
-header:
-  image: "/assets/images/header-v1.2.png"
-
 author:
-  name   : "Amir Lastname"
-  avatar : "/assets/images/bio-photo.jpg"
-  bio    : "My awesome biography constrained to a sentence or two goes here."
+#  name   : "Optimization CoE @ BLEND 360"
+#  avatar : "/assets/images/coe-logo-v1.0.png"
+  bio : "The optimization center of excellence @ BLEND 360 leads our organization in developing perspective analytics, mathematical programming, and optimization solutions for our clients in a wide variety of industries. We are also committed to share our experience and innovative solutions with the larger optimization community because we believe knowledge sharing is an integral part of innovation."
   links:
-    - label: "Website"
+    - label: "BLEND 360"
       icon: "fas fa-fw fa-link"
-      url: "https://"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
+      url: "https://www.blend360.com/"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/company/blend360"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      url: "https://instagram.com/"
+      url: "https://github.com/orgs/BLEND360/teams/optimizationcoe/repositories"
 
 footer:
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
+    - label: "BLEND 360"
+      icon: "fas fa-fw fa-link"
+      url: "https://www.blend360.com/"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/company/blend360"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      url: "https://instagram.com/"
+      url: "https://github.com/orgs/BLEND360/teams/optimizationcoe/repositories"
+
+collections:
+    team:
+      output: true
 
 defaults:
+  # _team
+  - scope:
+      path: "_team"
+      type: team_member
+    values:
+      layout: single
+      author_profile: false
   # _posts
   - scope:
       path: ""
@@ -109,7 +114,7 @@ defaults:
       type: pages
     values:
       layout: single
-      author_profile: true
+      author_profile: false
 
 category_archive:
   type: liquid

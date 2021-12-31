@@ -1,0 +1,53 @@
+---
+permalink: /team/
+title: "Our Team"
+---
+<!-- loop over each team member .md file in _team folder -->
+<ul>
+  {% for team_member in site.team %}
+    <li>
+      <h2>{{ team_member.name }}</h2>
+      <P>
+        <!-- get member attribution -->
+        {{ team_member.position }}<br>
+        <!-- set avatar attribution -->
+        {% if team_member.avatar %}
+            <div class="author__avatar">
+              <a href="{{ team_member.home | default: '/' | absolute_url }}">
+                <img src="{{ team_member.avatar | relative_url }}"
+                     alt="{{ team_member.name }}"
+                     itemprop="image"
+                     class="u-photo"
+                     align="left"
+                     style="margin:20px">
+              </a>
+            </div>
+        {% endif %}
+        <!-- get member bio -->
+        {{team_member.bio}}
+      </p>
+      <p>
+        <!-- get member contact links
+             iterate over member member
+             remove bullet point list
+        -->
+        {% if team_member.links %}
+          {% for link in team_member.links %}
+            {% if link.label and link.url %}
+              <div id="member__links">
+                <ul style="list-style: none;">
+                  <li>
+                    <a href="{{ link.url }}" rel="nofollow noopener noreferrer me">
+                      <i class="{{link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i>
+                      <span class="label"> {{link.label}} </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </p>
+    </li>
+  {% endfor %}
+</ul>
