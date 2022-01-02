@@ -1,0 +1,76 @@
+Pip Courbois:
+  name        : "Pip Courbois"
+  name: "Pip Courbois"
+  position: "Vice President"
+  bio: "Ph.D. in Statistics from Oregon State University​ with 20+ years of experience in delivering applied analytics and machine learning solutions in Groupon, and Amazon."
+  avatar: "/assets/images/Team-images/Pip-removebg-final.png"
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/pipcourbois"
+
+Jeff Chen:
+  name: "Jeff Chen"
+  position: "SR Director"
+  bio: "Ph.D. in Industrial Engineering from Kansas State University with 15+ years of experience in designing personalized targeted marketing and process optimization solutions in Kroger, Discover, and United Airlines."
+  avatar: "/assets/images/Team-images/Jeff-removebg-final.png"
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/jeffchenzf/"
+
+Serhat Kecici:
+  name: "Serhat Kecici"
+  position: "Director"
+  bio: "MSc. in Industrial Engineering from Bogazici University with 10+ years of experience in developing data science solutions to generate incremental revenue or cost saving in IBM, Turkcell, and NACG."
+  avatar: "/assets/images/Team-images/Serhat-removebg-greyscale-final.png"
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/serhat-kecici-20240335/"
+
+Mo Afkhami:
+  name: "Mo Afkhami"
+  position: "SR Data Scientist"
+  bio: "Ph.D. in Finance from Stevens Institute of Technology with 2+ years of experience in implementing optimization, statistical, and data-driven methods for modeling of stochastic processes in health care industry.​"
+  avatar: "/assets/images/Team-images/Mo-removebg-final.png"
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/mo-afkham/"
+    - label: "Google Scholar"
+      icon: "fas fa-fw fa-user-graduate"
+      url: "https://scholar.google.com/citations?user=YAmnuTQAAAAJ&hl=en"
+
+Amir Nasrollahzadeh:
+  name: "Amir Nasrollahzadeh"
+  position: "SR Data Scientist"
+  bio: "Ph.D. in Industrial Engineering from Clemson University with 4+ years of experience in developing data science and optimization solutions in Cognizant, Caltrans, and health care industry.​"
+  avatar: "/assets/images/Team-images/Amir-removebg-greyscale-final.png"
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/amirali-nasrollahzadeh/"
+    - label: "Google Scholar"
+      icon: "fas fa-fw fa-user-graduate"
+      url: "https://scholar.google.com/citations?user=dymlTIsAAAAJ&hl=en"
+
+Vishesh Shah:
+  name: "Vishesh Shah"
+  position: "SR Program Manager"
+  bio: "MSc. in Engineering Management from Johns Hopkins University​ with 2+ years of experience in data analysis, and stakeholder relationship management in Danfoss and health care industry.​"
+  avatar: "/assets/images/Team-images/Vishesh-removebg-grayscale-final.png"
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/profilevisheshshah/"
+
+Ayush Rajput:
+  name: "Ayush Rajput"
+  position: "Data Scientist"
+  bio: "MSc. in Industrial Engineering Management from University of Illinois Urbana-Champaign​ with 1+ years of experience in developing analytical solution for e-commerce clients.​"
+  avatar: "/assets/images/Team-images/Ayush-removebg-greyscale-final.png"
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/ayush-rajput-75350ab4/"
