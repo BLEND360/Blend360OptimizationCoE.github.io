@@ -1,37 +1,18 @@
 ---
+title: "Dynamic transshipment policies for interstate moving companies with load uncertainty"
+excerpt: "Interstate moving companies move household items from one location to another. They often optimize their routes by assigning a truck to n > 1 households in a single day within a region, move the items to a storage location and then solve a dispatch problem to deliver each household's items from storage to the new location within a time window. A crucial step in planning is knowing in advance the size of the cargo that will have to be picked up. This was traditionally done through an examination by an agent before the scheduled move. With recent changes due to COVID restrictions, moving companies rely on customer’s estimate of volume and size of their items. These estimates often have errors and may cause order cancellations at the last minute, either due to price difference from the initial quote or limited capacity of the assigned truck."
 usemathjax: true
+toc: true
+toc_label: "Notebook table of content"
+toc_sticky: true
 ---
-# Interstate moving companies with load uncertainty
 
-#### TOC:
-1- [Problem description](#problem) <br>
-2- [Dynamic programming model](#model) <br>
-3- [Implementation](#implementation) <br>
-&nbsp; 3.1- [Input data](#input) <br>
-&nbsp; 3.2- [State space](#state) <br>
-&nbsp; 3.3- [Action space](#action) <br>
-&nbsp; 3.4- [Transition function](#transition) <br>
-&nbsp; 3.5- [Immediate cost/reward](#reward) <br>
-4- [Solution method](#solution) <br>
-&nbsp; 4.1- [Rolling-horizon policy](#sol-policy) <br>
-&nbsp; 4.2- [Simulation model](#simulation) <br>
-&nbsp;&nbsp; 4.2.1- [Implementing one-step look-ahead policy](#one-step) <br>
-&nbsp;&nbsp; 4.2.2- [Benchmark: immediate dispatch](#benchmark) <br>
-&nbsp; 4.3- [Estimation error in order size](#error-policy) <br>
-5- [Results](#results) <br>
-&nbsp; 5.1- [Number of trucks](#trucks) <br>
-&nbsp; 5.2- [Delay in shipment](#delay) <br>
-&nbsp; 5.3- [Cumulative revenue](#revenue) <br>
-&nbsp; 5.4- [Error-adjusted results](#error) <br>
-
-## 1- Problem description: <a name="problem"></a>
-
-Interstate moving companies move household items from one location to another. They often optimize their routes by assigning a truck to n > 1 households in a single day within a region, move the items to a storage location and then solve a dispatch problem to deliver each household's items from storage to the new location within a time window. A crucial step in planning is knowing in advance the size of the cargo that will have to be picked up. This was traditionally done through an examination by an agent before the scheduled move. With recent changes due to COVID restrictions, moving companies rely on customer’s estimate of volume and size of their items. These estimates often have errors and may cause order cancellations at the last minute, either due to price difference from the initial quote or limited capacity of the assigned truck. As a result, an additional source of uncertainty is introduced in the planning of the moving company. We propose a stochastic optimization framework that incorporates this uncertainty in scheduling load shipments between moving companies regional warehouses.
+Interstate moving companies move household items from one location to another. They often optimize their routes by assigning a truck to $$n > 1$$ households in a single day within a region, move the items to a storage location and then solve a dispatch problem to deliver each household's items from storage to the new location within a time window. A crucial step in planning is knowing in advance the size of the cargo that will have to be picked up. This was traditionally done through an examination by an agent before the scheduled move. With recent changes due to COVID restrictions, moving companies rely on customer’s estimate of volume and size of their items. These estimates often have errors and may cause order cancellations at the last minute, either due to price difference from the initial quote or limited capacity of the assigned truck. As a result, an additional source of uncertainty is introduced in the planning of the moving company. We propose a stochastic optimization framework that incorporates this uncertainty in scheduling load shipments between moving companies regional warehouses.
 
 <table>
     <tr>
-        <td> <img src="{{ site.url }}{{ site.baseurl }}/assets/images/Post-images/{{ page.path | replace: '.md', '' | replace: '_posts/', '' }}/fig1-transshipment_overview.png" alt="Problem Overview" style="width: 500px"/> </td>
-        <td> <img src="{{ site.url }}{{ site.baseurl }}/assets/images/Post-images/{{ page.path | replace: '.md', '' | replace: '_posts/', '' }}/fig2-order_arrival_rates.png" alt="Warehouse Order Arrival Rates" style="width: 500px"/> </td>
+        <td> <img src="{{ site.url }}{{ site.baseurl }}/assets/images/Post-images/{{ page.path | replace: '.md', '' | replace: '_posts/', '' }}/fig1-transshipment_overview.png" alt="Problem Overview" style="width: 500px; height: 250px"/> </td>
+        <td> <img src="{{ site.url }}{{ site.baseurl }}/assets/images/Post-images/{{ page.path | replace: '.md', '' | replace: '_posts/', '' }}/fig2-order_arrival_rates.png" alt="Warehouse Order Arrival Rates" style="width: 500px; height: 250px"/> </td>
     </tr>
     <tr>
         <td style="text-align:center">Fig. 1: Problem Overview</td>
@@ -39,13 +20,13 @@ Interstate moving companies move household items from one location to another. T
     </tr>
 </table>
 
-**Fig 1** above shows an overview of the problem where orders from different region arrive into the origin warehouse. This process is not modeled via our solution as we assume that once an order arrives, its pickup and transfer to origin warehouse are deterministically determined. Then, the order is shipped from the origin warehouse to a destination warehouse. In this process, the destination warehouse is predetermined. However, the order can be immediately shipped to the destination warehouse or it can be delayed to match with another order (to the same destination) given the remaining truck capacity. Transferring from destination warehouse to destination is also assumed to be deterministically determined and thus is not conisdered in our formulation.
+**Fig 1** above shows an overview of the problem where orders from different region arrive into the origin warehouse. This process is not modeled via our solution as we assume that once an order arrives, its pickup and transfer to origin warehouse are deterministically determined. Then, the order is shipped from the origin warehouse to a destination warehouse. In this process, the destination warehouse is predetermined. However, the order can be immediately shipped to the destination warehouse or it can be delayed to match with another order (to the same destination) given the remaining truck capacity. Transferring from destination warehouse to destination is also assumed to be deterministically determined and thus is not considered in our formulation.
 
 **Fig 2** shows the order arrival process. Note that, to ease computation, the order arrival process of only a certain set of cities are considered in the following example.
 
-## 2- Dynamic Programming Model: <a name="model"></a>
+## 1- Dynamic Programming Model <a name="model"></a>
 
-Once an order is recieved by the moving company, its origin, destination, pickup time, and estimated size are known. In the following model, the actual pickup time and final delivery are assumed to be deterministic and therefore of no consequence to the model. However, the time an item is kept in the moving company's regional warehouse before shipping to the destination warehouse is stochastic. This time is captured in the following model where the *value function* is incentivized to minimize it by assigning a penalty to delayed time after pickup.
+Once an order is received by the moving company, its origin, destination, pickup time, and estimated size are known. In the following model, the actual pickup time and final delivery are assumed to be deterministic and therefore of no consequence to the model. However, the time an item is kept in the moving company's regional warehouse before shipping to the destination warehouse is stochastic. This time is captured in the following model where the *value function* is incentivized to minimize it by assigning a penalty to delayed time after pickup.
 
 **Decision time**:
 
@@ -62,17 +43,18 @@ where $$w^o_i,\,w^d_i\in\mathbb{W}:=\{1, 2, \ldots, \|W\|\}$$ denote the *origin
 *Error adjustment*: It is assumed that $$s_i$$ may be estimated with error by the customer and its true size is only revealed at the time of pickup. The estimate error may be normal, or skewed to right and left to capture overestimation and  underestimation.
 
 **Action space**:
+
 $$
     X:=\bigg\{x^t_i\in\{0, 1\},\,\, i= 1, 2, \ldots; N^t_{o, d}\in\mathbb{Z}_{+},\,\, o, d\in\mathbb{W}\bigg\},
 $$
 
-where $x^t_i$ is a binary variable which is $1$ if order $i$ is shipped at time $t$, and $N^t_{o,d}$ is the number of trucks required to ship orders from origin $o$ to desination $d$.
+where $$x^t_i$$ is a binary variable which is $$1$$ if order $$i$$ is shipped at time $$t$$, and $$N^t_{o,d}$$ is the number of trucks required to ship orders from origin $$o$$ to destination $$d$$.
 
 1- Note that orders cannot be shipped if their pickup time has not arrived yet:
 
 $$ t^p_i x^t_i \leq t, \qquad \forall i = 1, 2, \ldots. $$
 
-2- Also, to determine the minimum number of trucks needed to ship all orders from origin $o$ and destination $d$:
+2- Also, to determine the minimum number of trucks needed to ship all orders from origin $$o$$ and destination $$d$$:
 
 $$ \begin{align*}
                   & \min N^t_{o, d}             &\\
@@ -81,44 +63,44 @@ $$ \begin{align*}
                   & \sum_{ij} u_{ij} = n,       &
 \end{align*}$$
 
-where $n$ denotes the number of orders to be shipped from origin $o$ to destination $d$. Binary decision variable $u_{ij}$ is $1$ when order $i$ is assigned to truck $j$, and $y_j$ is a helper binary decision variable which is $1$ if truck $j$ is assigned a shipment. The maximum number of truck is assumed to be equal to the number of orders. $\nu$ represents truck capacity which, for the sake of simplicity, is assumed to be equal for all trucks.
+where $$n$$ denotes the number of orders to be shipped from origin $$o$$ to destination $$d$$. Binary decision variable $$u_{ij}$$ is $$1$$ when order $$i$$ is assigned to truck $$j$$, and $$y_j$$ is a helper binary decision variable which is $$1$$ if truck $$j$$ is assigned a shipment. The maximum number of truck is assumed to be equal to the number of orders. $$\nu$$ represents truck capacity which, for the sake of simplicity, is assumed to be equal for all trucks.
 
 **Transition function**:
+
 $$
     S_{t+1} = \eta(S_t, X_t, \omega),
 $$
 
-where $\eta$ is a representation of the transition function where $\omega$ is the random element governing the arrival of new orders. Apart from the random element, state transition is straigtforward as orders whose $f_i = 1$ (i.e., orders which are already shipped) are removed from the state space.
-
+where $$\eta$$ is a representation of the transition function where $$\omega$$ is the random element governing the arrival of new orders. Apart from the random element, state transition is straightforward as orders whose $$f_i = 1$$ (i.e., orders which are already shipped) are removed from the state space.
 
 **Immediate reward**:
 
-1- Shipping revenue: Taking orders of different sizes from an origin to a desination at time $t$ generates revenue of
+1- Shipping revenue: Taking orders of different sizes from an origin to a destination at time $$t$$ generates revenue of
 
 $$\sum_{i}\sum_{w^o_i, w^d_i\in\mathbb{W}} P^t_{o, d} s_i x^t_i,$$
 
-where $P^t_{o, d}$ is the price of transferring one unit of load from $o$ to $d$ at time $t$.
+where $$P^t_{o, d}$$ is the price of transferring one unit of load from $$o$$ to $$d$$ at time $$t$$.
 
 2- Truck rent cost: Shipments from an origin to a destination are loaded onto a rented truck the cost of which is
 
 $$\sum_{w^o_i, w^d_i\in\mathbb{W}} N^t_{o, d} C^t_{o, d},$$
 
-where $C^t_{o, d}$ is the cost of renting a truck for shipping from $o$ to $d$ at time $t$.
+where $$C^t_{o, d}$$ is the cost of renting a truck for shipping from $$o$$ to $$d$$ at time $$t$$.
 
 3- Shipment delay cost: Delaying a shipment after its pick up time results in a cost captured by
 
 $$\sum_{i}\sum_{w^o_i, w^d_i\in\mathbb{W}} C(t - t^p_i) x^t_i,$$
 
-where $C$ is the cost of delaying a shipment per unit of time.
+where $$C$$ is the cost of delaying a shipment per unit of time.
 
-The total cost of transition form state $S_t$ to state $S_{t+1}$ taking action $X_t$ will be calculated by
+The total cost of transition form state $$S_t$$ to state $$S_{t+1}$$ taking action $$X_t$$ will be calculated by
 
 $$h(S_t, X_t, S_{t+1}) = \sum_{i}\sum_{w^o_i, w^d_i\in\mathbb{W}} P^t_{o, d} s_i x^t_i - \sum_{w^o_i, w^d_i\in\mathbb{W}} N^t_{o, d} C^t_{o, d} - \sum_{i}\sum_{w^o_i, w^d_i\in\mathbb{W}} C(t - t^p_i) x^t_i
 $$
 
 **Policy value function & Bellman's equation**
 
-Implementing a policy $\pi$ will result in the total discounted cost of
+Implementing a policy $$\pi$$ will result in the total discounted cost of
 
 $$\mathscr{L}_{\pi}(s) = \mathbb{E}_\pi\bigg\{\sum_{t=0}^{\infty} \gamma^t\, h(S_t, X_t, S_{t+1})\,\bigg|\,S_0 = s\bigg\},$$
 
@@ -130,16 +112,16 @@ which is also optimal to the Bellman's equation
 
 $$V(s) = \min_{x_t} \mathbb{E}_x \Big[h(S_t, X_t, S_{t+1}) + \gamma^{t+1} V(S_{t+1})\, \Big|\, S_t = s\Big]$$
 
-where $\pi(s) = (X_t)_{t=0}^\infty$.
+where $$\pi(s) = (X_t)_{t=0}^\infty$$.
 
 
-## 3- Model Implementation <a name="implementation"></a>
+## 2- Model Implementation <a name="implementation"></a>
 
-The following code is an attempt at impelemnting [the dynamic programming model](#dp-model).
+The following code is an attempt at implementing [the dynamic programming model](#model).
 
-### 3.1- Input data <a name="input"></a>
+### 2.1- Input data <a name="input"></a>
 
-Interarrival times between order arrivals are modeled to be generated according to an exponential process with regional arrival rates (refer to Fig. 1). This is a convenient assumption because the earliest arrival will be distributed according to another exponential distribution whose mean is the sum of all regional arrival rates. However, to ease implementation, we assume an overall exponential distrubiton where orders arrive every three hours.
+Interarrival times between order arrivals are modeled to be generated according to an exponential process with regional arrival rates (refer to Fig. 1). This is a convenient assumption because the earliest arrival will be distributed according to another exponential distribution whose mean is the sum of all regional arrival rates. However, to ease implementation, we assume an overall exponential distribution where orders arrive every three hours.
 
 When an order arrives into the system, its origin, destination, pickup time and size must be generated. This is done with the process described below.
 
@@ -198,8 +180,8 @@ def dist_org_dest(org, dest):
     return pickup_attr_df.loc[(pickup_attr_df.org == org) & (pickup_attr_df.dest == dest), 'dist'].values[0]
 ```
 
-### 3.2- State space <a name="state"></a>
-The state space is meant to store all the required information necessary for making decisions. According to the dynamic programming model described in [Section 2](#dp-model), the state variable for this problem stores, order status, origin, destination, pickup time, and estimated order size. In this implementation, `<generate_new_orders_func>` function generates a new unassigned order (i.e., `status = 0`) by evaluating the minimum inter-pickup time and identify its associated origin and destination utilizing function `<generate_order_pickup_func>` and determining its size using `<generate_order_size_func>` function.
+### 2.2- State space <a name="state"></a>
+The state space is meant to store all the required information necessary for making decisions. According to the dynamic programming model described in [Section 2](#model), the state variable for this problem stores, order status, origin, destination, pickup time, and estimated order size. In this implementation, `<generate_new_orders_func>` function generates a new unassigned order (i.e., `status = 0`) by evaluating the minimum inter-pickup time and identify its associated origin and destination utilizing function `<generate_order_pickup_func>` and determining its size using `<generate_order_size_func>` function.
 
 
 ```python
@@ -270,9 +252,9 @@ def fel_maintainer_func(current_time, random_state):
     fel = sorted([t for t in fel if t > current_time])
 ```
 
-### 3.3- Action space <a name="action"></a>
+### 2.3- Action space <a name="action"></a>
 
-The `<determine_actions_func>` function creates an initial set of actions that are then filtered by the model constraints to produce a feasible decision set. Then, `<minimize_num_trucks>` function is used to determine the minimum number of trucks required to carry out each feasible action by solving an integer optimization described in [Section 2](#dp-model).
+The `<determine_actions_func>` function creates an initial set of actions that are then filtered by the model constraints to produce a feasible decision set. Then, `<minimize_num_trucks>` function is used to determine the minimum number of trucks required to carry out each feasible action by solving an integer optimization described in [Section 2](#model).
 
 
 ```python
@@ -379,7 +361,7 @@ def determine_actions_func(state_lst, t):
     return action_lst, truck_lst
 ```
 
-### 3.4- Transition function <a name="transition"></a>
+### 2.4- Transition function <a name="transition"></a>
 
 Given a state and an action, the system transitions to a new state. For example, if an order is shipped, its status changes from 0 to 1. Decision epochs are pickup times, however, between each decision, one or a few new orders may arrive for which the pickup time may be sooner or later than the pickup times for orders that are already in the list.
 
@@ -457,7 +439,7 @@ def transition_func(state_lst, action, t, random_state, one_step_flag):
     return state_lst, earliest_pickup
 ```
 
-### 3.5- Immediate cost/reward function <a name="reward"></a>
+### 2.5- Immediate cost/reward function <a name="reward"></a>
 
 Here, the three different component of the cost/reward structure is built: Shipping revenue `<shipping_revenue_func>`, Truck rent `<renting_cost_func>`, and Shipment delay cost `<delay_cost_func>`. Some of the parameters used in evaluating these components are chosen arbitrarily.
 
@@ -501,15 +483,15 @@ def immediate_rewards_func(state_lst, action, truck_dict, t):
     return immed_shipping_revenue - immed_rent_cost - immed_delay_cost
 ```
 
-## 4- Overview of solution method: <a name="solution"></a>
+## 3- Overview of solution method: <a name="solution"></a>
 
 The state space is continuouse and unbounded and therefore, no tractible exact solution method exist to solve the formulation above. However, approximate dynamic programming methods can identify near-optimal policies that perform reasonably well. To assess the quality of solution, the approximate dynamic policy is compared in terms of total realized revenue with a benchmark policy that immediately ships every order. The approximate dynamic programming method developed in this settings is a special case of the heuristic family of rolling-horizon policies.
 
-### 4.1- Rolling-horizon policy <a name="sol-policy"></a>
+### 3.1- Rolling-horizon policy <a name="sol-policy"></a>
 
-In this heuristic framework, it is assumed that the horizon is at decision epoch $t+\tau$. State evolution is simulated for all possible actions and transitions until the horizon is reached. Since no further transition will happen at the horizon, its value can be derived only in terms of immediate cost/rewards. Moving backward, the best value of each previous state (w.r.t. actions) can also derived and thus the best policy is known throughout period $[t, t+\tau]$. Then, the horizon is rolled over one decision epoch and the process repeats.
+In this heuristic framework, it is assumed that the horizon is at decision epoch $$t+\tau$$. State evolution is simulated for all possible actions and transitions until the horizon is reached. Since no further transition will happen at the horizon, its value can be derived only in terms of immediate cost/rewards. Moving backward, the best value of each previous state (w.r.t. actions) can also derived and thus the best policy is known throughout period $$[t, t+\tau]$$. Then, the horizon is rolled over one decision epoch and the process repeats.
 
-The *One-step look-ahead policy* is a specific case of the rolling-horizon heuristic family where $\tau = 1$. For complex stochastic problem where simulating state evolution several steps into the future is time consuming, one-step look-ahead policies proivde an easy-to-compute approximate solution method. The rolling-horizin policies are shown to be asymptotically optimal.
+The *One-step look-ahead policy* is a specific case of the rolling-horizon heuristic family where $$\tau = 1$$. For complex stochastic problem where simulating state evolution several steps into the future is time consuming, one-step look-ahead policies proivde an easy-to-compute approximate solution method. The rolling-horizin policies are shown to be asymptotically optimal.
 
 The function `<one_step_look_ahead_policy_func>` below, implements the one-step look-ahead policy by assuming that the next decision epoch is the last and thus all the remaining orders haver to be shipped immediately. Therefore, all cost/rewards are immediate and can be evaluated easily by `<immediate_rewards_func>` function. Enumerating over all action possible in a one-step transition will allow the function to identify the best one-step action.
 
@@ -573,11 +555,11 @@ def one_step_look_ahead_policy_func(state_lst, t, random_state, seed):
     return best_one_step_action, best_one_step_trucks, best_one_step_value
 ```
 
-### 4.2- Simulation: <a name="simulation"></a>
+### 3.2- Simulation <a name="simulation"></a>
 
 Starting from time `t = 0`, a new order arrival time is generated. Then, the pickup time of the order is generated. The algorithm checks whether any other orders will arrive between the first order arrival and the first order pick up. If not, the time moves forward to the earliest pickup time. If new orders arrive between the first arrival and the first pickup, for each new arrival, a new pickup time is generated and the time moves forward to the earliest pickup time.
 
-#### 4.2.1- One-step look-ahead policy <a name="one-step"></a>
+#### 3.2.1- One-step look-ahead policy <a name="one-step"></a>
 
 Since the sequence of random events depend on the sequence of random number, to remove the effect of psuedo-random-sequence bias, the simulation is replicated for `30` iteration and the results are averaged over the sample. In the simulation, two sequences of random numbers are maintained. The first one, `overall_see`, is used to control the sequence of realized events. The second one, `onestep_seed`, is used to control the one-step look-ahead sequence of events which will be kept the same at each decision epoch so that the one-step decision are compared with respect to the same one-step ahead simulated event.
 
@@ -642,7 +624,7 @@ for i in range(0, 30):
     trucks_lst.append(optimal_trucks)
 ```
 
-#### 4.2.2- Benchmark: always immediately ship the order <a name="benchmark"></a>
+#### 3.2.2- Benchmark: always immediately ship the order <a name="benchmark"></a>
 
 In this case, one an order pickup time arrives, the order is immediately shipped to the destination. For this simulation, there is no need to employ the one-step look-ahead policy and function since the action is predetermined. To make a fair comparison, the sequence of random event is kept similar to the one-step look-ahead simulation.
 
@@ -706,9 +688,9 @@ for i in range(0, 30):
     benchmark_trucks_lst.append(benchmark_trucks)
 ```
 
-### 4.3- Estimation error in order size <a name="error-policy"></a>
+### 3.3- Estimation error in order size <a name="error-policy"></a>
 
-Below, `<size_error_adjustment>` function determine the error is estimation of the size. Currenty, errors are generated from uniform distributions and are used to adjust the size of an order. For unbiased errors, a random error percentage is generated from $[-10, 10]$ which allows at most $10\%$ of error in under- or overestimation. For underestimation, the range is $[0, 10]$ while, for overestimation, it is assumed to be $[-10, 0]$.
+Below, `<size_error_adjustment>` function determine the error is estimation of the size. Currenty, errors are generated from uniform distributions and are used to adjust the size of an order. For unbiased errors, a random error percentage is generated from $$[-10, 10]$$ which allows at most $$10\%$$ of error in under- or overestimation. For underestimation, the range is $$[0, 10]$$ while, for overestimation, it is assumed to be $$[-10, 0]$$.
 
 ***NOTE*** that these errors reveal themselves by adjusting order's sizes in the state space only when the actual time of pickup is arrived. Therefore, in the one-step look-ahead policy, these size adjustment do go into effect for one-step simulations of the state space.
 
@@ -809,13 +791,13 @@ for i in range(0, 30):
     error_trucks_lst.append(error_trucks)
 ```
 
-## 5- Results <a name="result"></a>
+## 4- Results <a name="result"></a>
 
 In this section, some key metrics to assess the performance of each policy are compared. The results are sample averages over `30` independent random sequences of events. `30` is chosen as a minimum reliable number of replications for the ***law of large numbers*** and ***central limit theorem*** to take effect. Obviously, the confidence in results will be stronger as the number of replications increases.
 
 The following, will present sample average results in terms of **number of truck** being used by each policy, **delay in shipment** for only the one-step look-ahead policy, and **cumulative revenue** in the horizon.
 
-### 5.1- Compare number of trucks <a name="trucks"></a>
+### 4.1- Compare number of trucks <a name="trucks"></a>
 
 
 ```python
@@ -838,7 +820,7 @@ print('Benchmark: ', mean_optimal_trucks, ' in ', st.norm.interval(alpha = 0.95,
     Benchmark:  73.0
 
 
-### 5.2- Delay in shipment <a name="delay"></a>
+### 4.2- Delay in shipment <a name="delay"></a>
 
 
 ```python
@@ -860,28 +842,9 @@ df = df[df.pickup_time <= 250]
 sns.scatterplot(data = df, x = "size", y = "delay")
 ```
 
-    <ipython-input-27-ef34ea232d60>:2: SettingWithCopyWarning:
-    A value is trying to be set on a copy of a slice from a DataFrame.
-    Try using .loc[row_indexer,col_indexer] = value instead
+![png]({{ site.url }}{{ site.baseurl }}/assets/images/Post-images/{{ page.path | replace: '.md', '' | replace: '_posts/', '' }}/output1-delay_distribution.png)
 
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-      df['delay'] = df['delivery_time'] - df['pickup_time']
-
-
-
-
-
-    <AxesSubplot:xlabel='size', ylabel='delay'>
-
-
-
-
-
-![png](output1-delay_distribution.png)
-
-
-
-### 5.3- Cumulative revenue <a name="revenue"></a>
+### 4.3- Cumulative revenue <a name="revenue"></a>
 
 
 ```python
@@ -907,21 +870,10 @@ df = pd.concat([df1[0:250], df2[0:250]], ignore_index = True)
 sns.lineplot(data = df, x = "time", y = "value", hue = 'label')
 ```
 
-
-
-
-    <AxesSubplot:xlabel='time', ylabel='value'>
-
-
-
-
-
 ![png]({{ site.url }}{{ site.baseurl }}/assets/images/Post-images/{{ page.path | replace: '.md', '' | replace: '_posts/', '' }}/output2-cum_revenue.png)
 
 
-
-### 5.4- Error adjusted results <a name="error"></a>
-
+### 4.4- Error adjusted results <a name="error"></a>
 
 ```python
 #print('normal error: ', sum(normal_error_trucks))
