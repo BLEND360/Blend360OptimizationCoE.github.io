@@ -223,7 +223,7 @@ type's serving time can also be modeled via an exponential (or normal)
 distribution, where $$p_j\sim\exp(\lambda_j)$$ where $$\lambda_j$$ is the
 expected time of finishing service type $$j$$.
 
-NOTE that assuming an
+***NOTE*** that assuming an
 exponential distribution will allow us to use the *memoryless property*
 which comes with its own advantages and disadvantages. For example, if a
 specific service is not finished by the end of a shift, the memoryless
@@ -234,6 +234,7 @@ the dynamic framework. Note that these random processes provide the
 opportunity to utilize external variables to estimate these distribution
 parameters. Examples could include weather conditions effects on arrival
 distribution.
+{: .notice--info}
 
 The second factor that affects the evolution of the system from state
 $$S_t$$ at the start of shift to state $$S_{t'}$$ at the end of shift, is

@@ -376,10 +376,11 @@ def determine_actions_func(state_lst, t):
 
 Given a state and an action, the system transitions to a new state. For example, if an order is shipped, its status changes from 0 to 1. Decision epochs are pickup times, however, between each decision, one or a few new orders may arrive for which the pickup time may be sooner or later than the pickup times for orders that are already in the list.
 
-***NOTE*** that the `<one_step_flag>` is used to distinguish between one-step look-ahead policie's estimate of the next state, and a transition which is triggered by taking an action. This is done to distinguish between different sequences of random number. For one-step look-ahead decision making, the function uses the same sequence of random number for each state.
+***NOTE*** that the `<one_step_flag>` is used to distinguish between one-step look-ahead policy's estimate of the next state, and a transition which is triggered by taking an action. This is done to distinguish between different sequences of random number. For one-step look-ahead decision making, the function uses the same sequence of random number for each state.
+{: .notice--info}
 
 ***NOTE*** that in each transition the future event list is checked to see whether new orders arrive before the next pick up time. If no future order arrival are in the future event list, a new arrival is generated.
-
+{: .notice--info}
 
 ```python
 def transition_func(state_lst, action, t, random_state, one_step_flag):
@@ -507,6 +508,7 @@ The *One-step look-ahead policy* is a specific case of the rolling-horizon heuri
 The function `<one_step_look_ahead_policy_func>` below, implements the one-step look-ahead policy by assuming that the next decision epoch is the last and thus all the remaining orders haver to be shipped immediately. Therefore, all cost/rewards are immediate and can be evaluated easily by `<immediate_rewards_func>` function. Enumerating over all action possible in a one-step transition will allow the function to identify the best one-step action.
 
 ***NOTE*** that, currently, two versions of the one-step look-ahead policy are maintained: sequential and parallel. Since, one-step transitions are independent of one another, those one-step simulations can be done in parallel.
+{: .notice--info}
 
 
 ```python
@@ -575,6 +577,7 @@ Starting from time `t = 0`, a new order arrival time is generated. Then, the pic
 Since the sequence of random events depend on the sequence of random number, to remove the effect of psuedo-random-sequence bias, the simulation is replicated for `30` iteration and the results are averaged over the sample. In the simulation, two sequences of random numbers are maintained. The first one, `overall_see`, is used to control the sequence of realized events. The second one, `onestep_seed`, is used to control the one-step look-ahead sequence of events which will be kept the same at each decision epoch so that the one-step decision are compared with respect to the same one-step ahead simulated event.
 
 ***NOTE*** that in the case of one-step look-ahead policy, a decision is made by simulating the system one-step forward where all the remaining shipments have to be shipped immediately.
+{: .notice--info}
 
 
 ```python
@@ -704,8 +707,10 @@ for i in range(0, 30):
 Below, `<size_error_adjustment>` function determine the error is estimation of the size. Currenty, errors are generated from uniform distributions and are used to adjust the size of an order. For unbiased errors, a random error percentage is generated from $$[-10, 10]$$ which allows at most $$10\%$$ of error in under- or overestimation. For underestimation, the range is $$[0, 10]$$ while, for overestimation, it is assumed to be $$[-10, 0]$$.
 
 ***NOTE*** that these errors reveal themselves by adjusting order's sizes in the state space only when the actual time of pickup is arrived. Therefore, in the one-step look-ahead policy, these size adjustment do go into effect for one-step simulations of the state space.
+{: .notice--info}
 
 ***NOTE*** that to make a fair comparison, the sequence of random events should be kept similar. Therefore, random numbers that are used to adjust the estimated size of an order should be sourced from a different random state. Otherwise, the sequence of random numbers for main event and for one-step look-ahead policy will be disrupted.
+{: .notice--info}
 
 
 ```python
