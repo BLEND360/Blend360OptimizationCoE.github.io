@@ -7,6 +7,15 @@ toc_label: "Notebook table of content"
 toc_sticky: true
 
 author: Amir Nasrollahzadeh
+header:
+  teaser: "/assets/images/Post-images/2021-18-11-dynamic_moving_policy_with_error/fig1-transshipment_overview.png"
+categories:
+  - Solution notebook
+tags:
+  - optimization
+  - shipping
+  - transshipment
+  - dynamic programming
 ---
 
 Interstate moving companies move household items from one location to another. They often optimize their routes by assigning a truck to $$n > 1$$ households in a single day within a region, move the items to a storage location and then solve a dispatch problem to deliver each household's items from storage to the new location within a time window. A crucial step in planning is knowing in advance the size of the cargo that will have to be picked up. This was traditionally done through an examination by an agent before the scheduled move. With recent changes due to COVID restrictions, moving companies rely on customer’s estimate of volume and size of their items. These estimates often have errors and may cause order cancellations at the last minute, either due to price difference from the initial quote or limited capacity of the assigned truck. As a result, an additional source of uncertainty is introduced in the planning of the moving company. We propose a stochastic optimization framework that incorporates this uncertainty in scheduling load shipments between moving companies regional warehouses.
