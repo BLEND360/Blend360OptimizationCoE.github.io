@@ -6,9 +6,11 @@ toc: true
 toc_label: "Notebook table of content"
 toc_sticky: true
 
-author: Amir Nasrollahzadeh
+authors:
+  - Amir Nasrollahzadeh
+  - Mo Afkhami
 header:
-  teaser: "/assets/images/Post-images/2021-18-11-dynamic_moving_policy_with_error/fig1-transshipment_overview.png"
+  teaser: "/assets/images/Post-images/2021-11-18-dynamic_moving_policy_with_error/fig1-transshipment_overview.png"
 categories:
   - Solution notebook
 tags:
