@@ -2,8 +2,8 @@
 title: "Optimal staff level using dynamic job shop scheduling"
 excerpt: "A company operates bases in the US where vehicles depart from and arrive to. Very broadly, this company provides several types of
 services. For their operation, they need to staff the bases with technicians and customer representatives. The primary goal is to improve
-how they staff by aligning it better with the volume of arriving and departing vehicles. With this, we're hoping to reduce under- and
-over-staffed moments, improving customer service and reducing labor costs."
+how they staff by aligning it better with the volume of arriving and departing vehicles. With this, they are hoping to reduce under- and
+over-staffed moments, improve customer service, and reduce labor costs."
 usemathjax: true
 toc: true
 toc_label: "Notebook table of content"
@@ -21,13 +21,13 @@ tags:
   - integer programming
 ---
 
-One other company operates bases in the US where vehicles depart from
+A company operates bases in the US where vehicles depart from
 and arrive to. Very broadly, the company provides several types of
 services. For their operation, they need to staff the bases with
 technicians and customer representatives. The primary goal is to improve
 how they staff by aligning it better with the volume of arriving and
-departing vehicles. With this, we're hoping to reduce under- and
-over-staffed moments, improving customer service and reducing labor
+departing vehicles. With this, they are hoping to reduce under- and
+over-staffed moments, improve customer service and reduce labor
 costs.
 
 **Simplified overview.**
