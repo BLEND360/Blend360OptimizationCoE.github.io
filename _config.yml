@@ -97,7 +97,7 @@ defaults:
     values:
       layout: authors #single
       author_profile: false
-      permalink: /authors/:slug
+      permalink: /team_member/:slug
   # _posts
   - scope:
       path: ""
