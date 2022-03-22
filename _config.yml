@@ -95,8 +95,9 @@ defaults:
       path: "_team"
       type: team_member
     values:
-      layout: single
+      layout: authors #single
       author_profile: false
+      permalink: /authors/:slug
   # _posts
   - scope:
       path: ""
