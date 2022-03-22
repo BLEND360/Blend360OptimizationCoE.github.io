@@ -1,5 +1,6 @@
 Pip Courbois:
   name: "Pip Courbois"
+  filename: "01-pip.md"
   position: "Vice President"
   bio: "Ph.D. in Statistics from Oregon State University​ with 20+ years of experience in delivering applied analytics and machine learning solutions in Groupon, and Amazon."
   avatar: "/assets/images/Team-images/Pip-removebg-final.png"
@@ -8,18 +9,9 @@ Pip Courbois:
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/pipcourbois"
 
-Jeff Chen:
-  name: "Jeff Chen"
-  position: "SR Director"
-  bio: "Ph.D. in Industrial Engineering from Kansas State University with 15+ years of experience in designing personalized targeted marketing and process optimization solutions in Kroger, Discover, and United Airlines."
-  avatar: "/assets/images/Team-images/Jeff-removebg-final.png"
-  links:
-    - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin"
-      url: "https://www.linkedin.com/in/jeffchenzf/"
-
 Serhat Kecici:
   name: "Serhat Kecici"
+  filename: "02-serhat.md"
   position: "Director"
   bio: "MSc. in Industrial Engineering from Bogazici University with 10+ years of experience in developing data science solutions to generate incremental revenue or cost saving in IBM, Turkcell, and NACG."
   avatar: "/assets/images/Team-images/Serhat-removebg-greyscale-final.png"
@@ -30,6 +22,7 @@ Serhat Kecici:
 
 Mo Afkhami:
   name: "Mo Afkhami"
+  filename: "03-mo.md"
   position: "SR Data Scientist"
   bio: "Ph.D. in Finance from Stevens Institute of Technology with 2+ years of experience in implementing optimization, statistical, and data-driven methods for modeling of stochastic processes in health care industry.​"
   avatar: "/assets/images/Team-images/Mo-removebg-final.png"
@@ -43,6 +36,7 @@ Mo Afkhami:
 
 Amir Nasrollahzadeh:
   name: "Amir Nasrollahzadeh"
+  filename: "04-amir.md"
   position: "SR Data Scientist"
   bio: "Ph.D. in Industrial Engineering from Clemson University with 4+ years of experience in developing data science and optimization solutions in Cognizant, Caltrans, and health care industry.​"
   avatar: "/assets/images/Team-images/Amir-removebg-greyscale-final.png"
@@ -56,6 +50,7 @@ Amir Nasrollahzadeh:
 
 Vishesh Shah:
   name: "Vishesh Shah"
+  filename: "05-vishesh.md"
   position: "SR Program Manager"
   bio: "MSc. in Engineering Management from Johns Hopkins University​ with 2+ years of experience in data analysis, and stakeholder relationship management in Danfoss and health care industry.​"
   avatar: "/assets/images/Team-images/Vishesh-removebg-grayscale-final.png"
@@ -66,6 +61,7 @@ Vishesh Shah:
 
 Ayush Rajput:
   name: "Ayush Rajput"
+  filename: "06-ayush.md"
   position: "Data Scientist"
   bio: "MSc. in Industrial Engineering Management from University of Illinois Urbana-Champaign​ with 1+ years of experience in developing analytical solution for e-commerce clients.​"
   avatar: "/assets/images/Team-images/Ayush-removebg-greyscale-final.png"
@@ -76,6 +72,7 @@ Ayush Rajput:
 
 Farhad Hasankhani:
   name: "Farhad Hasankhani"
+  filename: "07-farhad.md"
   position: "SR Data Scientist"
   bio: "Ph.D. in Industrial Engineering from Clemson University with 3+ years of experience in developing data science and optimization solutions in Norfolk and Bayer Crop Science.​"
   avatar: "/assets/images/Team-images/Farhad-removebg-greyscale.png"
@@ -89,6 +86,7 @@ Farhad Hasankhani:
 
 Rahul Deshmukh:
   name: "Rahul Deshmukh"
+  filename: "08-rahul.md"
   position: "SR Data Scientist"
   bio: "Master in Industrial Engineering from University of South Florida with 3+ years of experience in developing graph analytics solutions in PN National Lab. and City of Largo​"
   avatar: "/assets/images/Team-images/Rahul-removebg-greyscale-final.png"
@@ -102,6 +100,7 @@ Rahul Deshmukh:
 
 Aneesh Muthiyan:
   name: "Aneesh Muthiyan"
+  filename: "09-aneesh.md"
   position: "SR Data Scientist"
   bio: "MSc. in Data Science from New Jersey Institute of Technology with 3+ years of experience in developing optimization solutions in ORMAE and health care industry.​"
   avatar: "/assets/images/Team-images/Aneesh-removebg-greyscale.png"
@@ -112,6 +111,7 @@ Aneesh Muthiyan:
 
 Pranav Kottoli:
   name: "Pranav Kottoli"
+  filename: "10-pranav.md"
   position: "Data Scientist"
   bio: "MSc. in Applied Data Science from Syracuse University with 2+ years of experience in developing analytical solutions in health care industry.​"
   avatar: "/assets/images/Team-images/Aneesh-removebg-greyscale.png"

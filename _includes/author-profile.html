@@ -16,7 +16,7 @@
   {% if page_author.avatar %}
   <div class="author__avatar">
       <!-- <a href="{{ page_author.home | default: '/' | absolute_url }}"> -->
-      <a href="{{ site.url }}{{ site.baseurl }}/team/{{ page_author.url }}">
+      <a href="{{ site.url }}{{ site.baseurl }}/team/{{ page_author.filename | replace: '.md', ''}}">
         <img src="{{ page_author.avatar | relative_url }}" alt="{{ page_author.name }}" itemprop="image" class="u-photo">
       </a>
     </div>
