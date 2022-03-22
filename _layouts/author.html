@@ -7,7 +7,7 @@ layout: default
 
 <h2>Post by this author</h2>
 {%- assign author_posts = site.posts
-  | where: "post", "post.author == page.name" or "post.authors contains page.name"
+  | where: "post", "post.author == page.name"
 -%}
 {%- for post in author_posts -%}
 <a href="{{ post.url }}">{{ post.title }}</a>
