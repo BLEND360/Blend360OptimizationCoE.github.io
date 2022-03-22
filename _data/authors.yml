@@ -100,3 +100,23 @@ Rahul Deshmukh:
     - label: "Google Scholar"
       icon: "fas fa-fw fa-user-graduate"
       url: "https://scholar.google.com/citations?user=9anarxcAAAAJ&hl=en&oi=sra"
+
+Aneesh Muthiyan:
+  name: "Aneesh Muthiyan"
+  position: "SR Data Scientist"
+  bio: "MSc. in Data Science from New Jersey Institute of Technology with 3+ years of experience in developing optimization solutions in ORMAE and health care industry.​"
+  avatar: "/assets/images/Team-images/Aneesh-removebg-greyscale.png"
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/aneesh-muthiyan/"
+
+Pranav Kottoli:
+  name: "Pranav Kottoli"
+  position: "Data Scientist"
+  bio: "MSc. in Applied Data Science from Syracuse University with 2+ years of experience in developing analytical solutions in health care industry.​"
+  avatar: "/assets/images/Team-images/Aneesh-removebg-greyscale.png"
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/pranav-kottoli-radhakrishna-a7249a17a"
