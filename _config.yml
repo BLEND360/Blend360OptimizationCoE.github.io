@@ -88,16 +88,17 @@ footer:
 collections:
     team:
       output: true
+      permalink: team/:title/
 
 defaults:
   # _team
   - scope:
-      path: "_team"
-      type: team_member
+      path: ""
+      type: team
     values:
-      layout: authors #single
+      layout: single #author
       author_profile: false
-      permalink: /team_member/:slug
+      permalink: /team/:slug
   # _posts
   - scope:
       path: ""
