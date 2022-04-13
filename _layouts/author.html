@@ -2,22 +2,40 @@
 layout: default
 ---
 
-<h1>Profile page for {{ page.name }}</h1>
-<p>{{ page.bio }}</p>
+<h1>Posts by {{ page.name }}</h1>
+<p>
+  {{ page.position }} <br>
+  <!-- set avatar attribution -->
+  {% if page.avatar %}
+    <div class="author__avatar">
+      <a href="{{ page.home | default: '/' | absolute_url }}">
+        <img src="{{ page.avatar | relative_url }}"
+             alt="{{ page.name }}"
+             itemprop="image"
+             class="u-photo"
+             align="left"
+             style="margin:20px">
+      </a>
+    </div>
+  {% endif %}
+  {{ page.bio }}
+</p>
 
-<h2>Post by this author</h2>
 {%- assign author_posts = site.posts
   | where: "post", "post.author == page.name"
 -%}
 {%- for post in author_posts -%}
-<a href="{{ post.url }}">{{ post.title }}</a>
+  <a href="{{ post.url }}">{{ post.title }}</a><br>
+  {{ post.excerpt }}<br>
 {%- endfor -%}
 
 {% for post in site.posts %}
 	{% if post.authors contains page.name %}
-		<a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+		<a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a><br>
+    {{ post.excerpt }}<br>
 	{% endif %}
   {% if page.name == post.author %}
-    <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+    <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a><br>
+    {{ post.excerpt }}<br>
   {% endif %}
 {% endfor %}
