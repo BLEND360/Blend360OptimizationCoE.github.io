@@ -24,7 +24,7 @@
 
   <div class="author__content">
     <h3 class="author__name p-name" itemprop="name">
-      <a class="u-url" rel="me" href="{{ page_author.home | default: '/' | absolute_url }}" itemprop="url">{{ page_author.name }}</a>
+      <a class="u-url" rel="me" href="{{ site.url }}{{ site.baseurl }}/team/{{ page_author.filename | replace: '.md', ''}}" itemprop="url">{{ page_author.name }}</a>
     </h3>
     {% if page_author.bio %}
       <div class="author__bio p-note" itemprop="description">
