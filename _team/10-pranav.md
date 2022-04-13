@@ -1,6 +1,7 @@
 ---
 short_name: "pranav"
 name: "Pranav Kottoli"
+filename: "10-pranav.md"
 position: "Data Scientist"
 bio: "MSc. in Applied Data Science from Syracuse University with 2+ years of experience in developing analytical solutions in health care industry.​"
 avatar: "/assets/images/Team-images/Pranav-removebg-greyscale-final.png"

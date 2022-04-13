@@ -2,6 +2,7 @@
 short_name: "amir"
 name: "Amir Nasrollahzadeh"
 position: "SR Data Scientist"
+filename: "04-Amir.md"
 bio: "Ph.D. in Industrial Engineering from Clemson University with 4+ years of experience in developing data science and optimization solutions in Cognizant, Caltrans, and health care industry.​"
 avatar: "/assets/images/Team-images/Amir-removebg-greyscale-final.png"
 links:

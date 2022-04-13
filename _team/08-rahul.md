@@ -1,6 +1,7 @@
 ---
 short_name: "rahul"
 name: "Rahul Deshmukh"
+filename: "08-rahul.md"
 position: "SR Data Scientist"
 bio: "MSc. in Industrial Engineering from University of South Florida with 3+ years of experience in developing graph analytics solutions in PN National Lab. and City of Largo​"
 avatar: "/assets/images/Team-images/Rahul-removebg-greyscale-final.png"

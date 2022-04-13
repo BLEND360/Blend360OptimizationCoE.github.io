@@ -1,6 +1,7 @@
 ---
 short_name: "pip"
 name: "Pip Courbois"
+filename: "01-pip.md"
 position: "Vice President"
 bio: "Ph.D. in Statistics from Oregon State University​ with 20+ years of experience in delivering applied analytics and machine learning solutions in Groupon, and Amazon."
 avatar: "/assets/images/Team-images/Pip-removebg-final.png"

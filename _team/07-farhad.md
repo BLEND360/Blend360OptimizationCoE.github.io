@@ -1,6 +1,7 @@
 ---
 short_name: "farhad"
 name: "Farhad Hasankhani"
+filename: "07-farhad.md"
 position: "SR Data Scientist"
 bio: "Ph.D. in Industrial Engineering from Clemson University with 3+ years of experience in developing data science and optimization solutions in Norfolk and Bayer Crop Science.​"
 avatar: "/assets/images/Team-images/Farhad-removebg-greyscale.png"

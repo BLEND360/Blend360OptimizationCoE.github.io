@@ -1,6 +1,7 @@
 ---
 short_name: "aneesh"
 name: "Aneesh Muthiyan"
+filename: "09-aneesh.md"
 position: "SR Data Scientist"
 bio: "MSc. in Data Science from New Jersey Institute of Technology with 3+ years of experience in developing optimization solutions in ORMAE and health care industry.​"
 avatar: "/assets/images/Team-images/Aneesh-removebg-greyscale.png"
