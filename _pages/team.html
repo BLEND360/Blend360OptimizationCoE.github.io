@@ -13,7 +13,7 @@ title: "Our Team"
         <!-- set avatar attribution -->
         {% if team_member.avatar %}
             <div class="author__avatar">
-              <a href="{{ team_member.home | default: '/' | absolute_url }}">
+              <a href="{{ site.url }}{{ site.baseurl }}/team/{{ page.filename | replace: '.md', ''}}">
                 <img src="{{ team_member.avatar | relative_url }}"
                      alt="{{ team_member.name }}"
                      itemprop="image"

@@ -8,7 +8,7 @@ layout: default
   <!-- set avatar attribution -->
   {% if page.avatar %}
     <div class="author__avatar">
-      <a href="{{ page.home | default: '/' | absolute_url }}">
+      <a href="{{ site.url }}{{ site.baseurl }}/team/{{ page.filename | replace: '.md', ''}}">
         <img src="{{ page.avatar | relative_url }}"
              alt="{{ page.name }}"
              itemprop="image"
